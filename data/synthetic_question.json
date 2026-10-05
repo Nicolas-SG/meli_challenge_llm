@@ -1,0 +1,602 @@
+[
+  {
+    "prompt": "What is vendor-stockkeeper-api responsible for?",
+    "answer": "It is the application responsible for updating the stock of items belonging to the Standard area that are offered on TechZone, through restocks from 3PL stock movements and inbound movements.",
+    "answerable": true,
+    "source": "vendor-stockkeeper-api/latest/guide/introduction.md#VENDOR STOCKKEEPER API > About"
+  },
+  {
+    "prompt": "Which endpoint of vendor-stockkeeper-api handles the Restock Consumer?",
+    "answer": "POST /fp/inventory/operations/restock-new.",
+    "answerable": true,
+    "source": "vendor-stockkeeper-api/latest/guide/api.md#Domain > Services"
+  },
+  {
+    "prompt": "Which endpoint of vendor-stockkeeper-api handles the Feed Consumer?",
+    "answer": "POST /fp/inventory/operations/feed.",
+    "answerable": true,
+    "source": "vendor-stockkeeper-api/latest/guide/api.md#Domain > Services"
+  },
+  {
+    "prompt": "What is the production base URL of vendor-stockkeeper-api on the TechZone Platform?",
+    "answer": "vendor-stockkeeper.techzonesystems.com (stage: vendor-stockkeeper-stage.techzonesystems.com).",
+    "answerable": true,
+    "source": "vendor-stockkeeper-api/latest/guide/api.md#Domain"
+  },
+  {
+    "prompt": "What field does the restock-new request body carry inside msg?",
+    "answer": "The inbound_shipment_id, for example 900000734.",
+    "answerable": true,
+    "source": "vendor-stockkeeper-api/latest/guide/api.md#Domain > Services > Restock Consumer"
+  },
+  {
+    "prompt": "What are the database names of vendor-stockkeeper-api for test, stage and prod?",
+    "answer": "inventtest for test, inventstg for stage and inventprd for prod, all on host proxysql.master.techzoneseginf.com port 6612.",
+    "answerable": true,
+    "source": "vendor-stockkeeper-api/latest/guide/database.md#Prod: inventprd"
+  },
+  {
+    "prompt": "Which two inventory flows require verifying test items before executing actions?",
+    "answer": "The Restock flow and the Feed flow.",
+    "answerable": true,
+    "source": "vendor-stockkeeper-api/latest/guide/important.md#Verification of Items in Inventory Flows > Inventory Flows"
+  },
+  {
+    "prompt": "How do you identify that an item is a test item in the restock flow?",
+    "answer": "Query the items API for the item and check its tags for test_item (or another tag that identifies a test item).",
+    "answerable": true,
+    "source": "vendor-stockkeeper-api/latest/guide/important.md#Verification of Items in Inventory Flows > How can we do it? > Restock Flow"
+  },
+  {
+    "prompt": "In the Feed flow, which table is queried with the operation id?",
+    "answer": "The 1p_3pl_product_stock_mov table of the 1p-3pl-integrator database.",
+    "answerable": true,
+    "source": "vendor-stockkeeper-api/latest/guide/important.md#Verification of Items in Inventory Flows > How can we do it? > Feed Flow"
+  },
+  {
+    "prompt": "What should you do when the alert 'Stockkeeper-api - Error restocking item (negative quantity)' fires?",
+    "answer": "Find the item in the vendor-stockkeeper-api logs, notify Envio Pack that the restock could not be completed, find out why the restock left quantities below 0, fix it, and if needed do a manual restock via the database or release a new version.",
+    "answerable": true,
+    "source": "vendor-stockkeeper-api/latest/guide/alerts.md#Alerts > How to resolve > [IMPORTANT] Stockkeeper-api - Error restocking item (negative quantity)"
+  },
+  {
+    "prompt": "Where should a ticket be raised to block a publication and prevent out-of-stock sales?",
+    "answer": "In Shield.",
+    "answerable": true,
+    "source": "vendor-stockkeeper-api/latest/guide/alerts.md#Alerts > How to resolve > Validation stock ERROR updating item"
+  },
+  {
+    "prompt": "What is payment-promise-gateway?",
+    "answer": "A middleware service that handles payment-related self-service operations for GreatMart's payment system, acting as an intermediary between frontend applications and core payment services.",
+    "answerable": true,
+    "source": "payment-promise-gateway/latest/guide/README.md#Payment Promise Gateway"
+  },
+  {
+    "prompt": "Which Java version and framework does payment-promise-gateway use?",
+    "answer": "Java 17 with Spring Boot 3.2.4.",
+    "answerable": true,
+    "source": "payment-promise-gateway/latest/guide/README.md#Payment Promise Gateway > Technical Stack"
+  },
+  {
+    "prompt": "Which dependency injection library does payment-promise-gateway use?",
+    "answer": "Google Guice.",
+    "answerable": true,
+    "source": "payment-promise-gateway/latest/guide/README.md#Payment Promise Gateway > Technical Stack"
+  },
+  {
+    "prompt": "Which endpoint creates a payment promise in payment-promise-gateway?",
+    "answer": "POST /payment_promise.",
+    "answerable": true,
+    "source": "payment-promise-gateway/latest/guide/README.md#Payment Promise Gateway > API Documentation"
+  },
+  {
+    "prompt": "Which endpoint confirms a late fee forgiveness proposal?",
+    "answer": "PUT /forgiveness_proposal.",
+    "answerable": true,
+    "source": "payment-promise-gateway/latest/guide/README.md#Payment Promise Gateway > Sequence Diagrams > 6. PUT /forgiveness_proposal"
+  },
+  {
+    "prompt": "What does GET /payment_promise/form return?",
+    "answer": "The form options for payment promises: available payment methods with their allowed min and max amounts, and the bulk amount.",
+    "answerable": true,
+    "source": "payment-promise-gateway/latest/guide/README.md#Payment Promise Gateway > Sequence Diagrams > 1. GET /payment_promise/form"
+  },
+  {
+    "prompt": "Which header identifies the user in GET /payment_promise/active?",
+    "answer": "The x-caller-id header.",
+    "answerable": true,
+    "source": "payment-promise-gateway/latest/guide/README.md#Payment Promise Gateway > Sequence Diagrams > 2. GET /payment_promise/active"
+  },
+  {
+    "prompt": "What environment variable must be set to run payment-promise-gateway locally?",
+    "answer": "SCOPE=dev or SCOPE=local.",
+    "answerable": true,
+    "source": "payment-promise-gateway/latest/guide/README.md#Payment Promise Gateway > Running the app"
+  },
+  {
+    "prompt": "Which design pattern does PromiseCommand illustrate in payment-promise-gateway?",
+    "answer": "The Command Pattern, used to encapsulate request parameters.",
+    "answerable": true,
+    "source": "payment-promise-gateway/latest/guide/README.md#Payment Promise Gateway > Design Patterns"
+  },
+  {
+    "prompt": "What does order-workflow-api (Workflow API) do?",
+    "answer": "It standardizes the development flow of apps in the Release Process: validates the branching model, protects important branches (minimum approvers, required checks), creates backports and creates automatic versions on a cron-like schedule.",
+    "answerable": true,
+    "source": "order-workflow-api/5.6.2-hotfix-1/guide/README.md#Getting started"
+  },
+  {
+    "prompt": "Which database does order-workflow-api use and what does it store?",
+    "answer": "A MySQL database that stores the workflow configuration (protected and releasable branches) and the automatic version creation schedule.",
+    "answerable": true,
+    "source": "order-workflow-api/5.6.2-hotfix-1/guide/README.md#Components > Database"
+  },
+  {
+    "prompt": "What is the production database schema and cluster of order-workflow-api?",
+    "answer": "Schema fulfillment on cluster orderworkflowapi00.",
+    "answerable": true,
+    "source": "order-workflow-api/5.6.2-hotfix-1/guide/services/database.md#Database > Scopes > Production"
+  },
+  {
+    "prompt": "Which BigQ topic does order-workflow-api consume in production for pipeline validation?",
+    "answer": "batesting-orchestrator.order-orchestrator-api, consumed by order-orchestrator-consumer at /pipeline/validate.",
+    "answerable": true,
+    "source": "order-workflow-api/5.6.2-hotfix-1/guide/services/bigq.md#BigQ > Scopes > Production"
+  },
+  {
+    "prompt": "What cron jobs does order-workflow-api have in production?",
+    "answer": "midday (0 12 * * *, /cron/midday) and nightly (0 20 * * *, /cron/nightly) under production-cron.",
+    "answerable": true,
+    "source": "order-workflow-api/5.6.2-hotfix-1/guide/services/jobs.md#Jobs > Scopes > Production"
+  },
+  {
+    "prompt": "Which workflow types exist in order-workflow-api?",
+    "answer": "Gitflow and Libflow.",
+    "answerable": true,
+    "source": "order-workflow-api/5.6.2-hotfix-1/guide/services/database.md#Database > Objects stored > Workflows"
+  },
+  {
+    "prompt": "What file is needed to run order-workflow-api tests against gh-proxy?",
+    "answer": "A private key file at src/main/resources/workflow-gh-proxy.key.",
+    "answerable": true,
+    "source": "order-workflow-api/5.6.2-hotfix-1/guide/development.md#Development > Testing"
+  },
+  {
+    "prompt": "How do you run order-workflow-api locally?",
+    "answer": "Copy application-local.yml.dist to application-local.yml, edit the parameters and run mvn spring-boot:run.",
+    "answerable": true,
+    "source": "order-workflow-api/5.6.2-hotfix-1/guide/development.md#Development > Running"
+  },
+  {
+    "prompt": "What does the BigQ consumer of order-workflow-api receive?",
+    "answer": "Tasks from the Orchestrator and webhooks from EventCollector.",
+    "answerable": true,
+    "source": "order-workflow-api/5.6.2-hotfix-1/guide/README.md#Components > BigQ"
+  },
+  {
+    "prompt": "What is Traffic Gate?",
+    "answer": "An application that adds to a whitelist the IP addresses that should not be hit by ratelimit rules in the WAF, evaluating blocked IPs against business rules; it also exposes an API to query blocked IPs, history and add IPs manually.",
+    "answerable": true,
+    "source": "traffic-gate-api/latest/guide/README.md#Traffic Gate"
+  },
+  {
+    "prompt": "What are the possible scope values for ratelimit rules in Traffic Gate?",
+    "answer": "front, api, pci and pci_global.",
+    "answerable": true,
+    "source": "traffic-gate-api/latest/guide/README.md#Traffic Gate > Criterios de Whitelist por Scope"
+  },
+  {
+    "prompt": "How often do the Traffic Gate whitelist and purge jobs run?",
+    "answer": "The whitelist jobs run every minute and the purge jobs every hour, one of each per scope (8 jobs).",
+    "answerable": true,
+    "source": "traffic-gate-api/latest/guide/sections/arch.md#Arquitectura > Jobs"
+  },
+  {
+    "prompt": "Which three modules does traffic-gate have?",
+    "answer": "Job module, Blacklist module and Whitelist module.",
+    "answerable": true,
+    "source": "traffic-gate-api/latest/guide/sections/arch.md#Arquitectura > Módulos de la Aplicación"
+  },
+  {
+    "prompt": "Which tables does the Traffic Gate database have?",
+    "answer": "execution, blacklist, whitelist, rules and ip.",
+    "answerable": true,
+    "source": "traffic-gate-api/latest/guide/sections/database.md#Base de datos"
+  },
+  {
+    "prompt": "To which topic are blocked IPs enqueued in Traffic Gate?",
+    "answer": "process-blocks.traffic-gate-api.",
+    "answerable": true,
+    "source": "traffic-gate-api/latest/guide/sections/processes.md#Procesos de Whitelist y Purga > Encolamiento de IPs Bloqueadas por Ratelimit"
+  },
+  {
+    "prompt": "Which API does Traffic Gate use to interact with the AWS WAF?",
+    "answer": "Vegeta API, which uses the AWS WAFv2 API.",
+    "answerable": true,
+    "source": "traffic-gate-api/latest/guide/sections/waf_config.md#Configuración WAF AWS"
+  },
+  {
+    "prompt": "Which endpoint of Vegeta API removes an IP from the whitelist during the purge?",
+    "answer": "DELETE /v1/whitelist.",
+    "answerable": true,
+    "source": "traffic-gate-api/latest/guide/sections/processes.md#Procesos de Whitelist y Purga > Proceso de purga"
+  },
+  {
+    "prompt": "What Go library does Traffic Gate use to get city and country of an IP?",
+    "answer": "geoip2.",
+    "answerable": true,
+    "source": "traffic-gate-api/latest/guide/sections/processes.md#Procesos de Whitelist y Purga > Procesamiento de IPs y Whitelist"
+  },
+  {
+    "prompt": "What is the ratelimit for non-RetailHub countries in the WAF?",
+    "answer": "200 requests every 5 minutes.",
+    "answerable": true,
+    "source": "traffic-gate-api/latest/guide/sections/waf_config.md#Configuración WAF AWS"
+  },
+  {
+    "prompt": "What does catalog-portfolio-api manage?",
+    "answer": "Brands, logos, collectors and resources in the curated portfolio platform.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/README.md#Catalog Portfolio API Documentation"
+  },
+  {
+    "prompt": "Which endpoint activates a brand in catalog-portfolio-api?",
+    "answer": "PUT /catalog/brands/{brandId}/activate.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/api-reference/README.md#API Reference > Quick Reference > Core Endpoints"
+  },
+  {
+    "prompt": "Which endpoint checks whether a brand can be activated?",
+    "answer": "GET /catalog/brands/{brandId}/activable.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/api-reference/README.md#API Reference > Quick Reference > Core Endpoints"
+  },
+  {
+    "prompt": "What are the possible states of a brand?",
+    "answer": "STAND_BY, ACTIVE and DELETED.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/brand-management/README.md#Brand Management > Brand States > State Descriptions"
+  },
+  {
+    "prompt": "What is required to activate a brand?",
+    "answer": "At least one main logo uploaded, all business rule validations passing, and compliance with the regulations service requirements.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/brand-management/README.md#Brand Management > Key Business Rules > Brand Activation Requirements"
+  },
+  {
+    "prompt": "What header is required to delete a brand?",
+    "answer": "X-Client-Id, and the client must be whitelisted.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/api-reference/brands.md#Brand Endpoints > Delete Brand > DELETE /{brandId}"
+  },
+  {
+    "prompt": "What is the rate limit of catalog-portfolio-api?",
+    "answer": "1000 requests per minute per client.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/api-reference/README.md#API Reference > Rate Limiting"
+  },
+  {
+    "prompt": "What error code is returned when a brand name already exists in a site?",
+    "answer": "brand_name_already_exists (HTTP 409).",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/api-reference/brands.md#Brand Endpoints > Error Responses > Common Error Codes"
+  },
+  {
+    "prompt": "Which web framework does catalog-portfolio-api use according to its technology stack?",
+    "answer": "Javalin.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/architecture/README.md#Architecture Overview > Technology Stack"
+  },
+  {
+    "prompt": "Which database version does catalog-portfolio-api use?",
+    "answer": "MySQL 8.0.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/architecture/README.md#Architecture Overview > Technology Stack"
+  },
+  {
+    "prompt": "Which external APIs does catalog-portfolio-api integrate with?",
+    "answer": "Pictures API for logos, Regulations API for category and compliance validation, BigQuery for event streaming and DataDog for metrics.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/architecture/README.md#Architecture Overview > Component Interactions > External Integrations"
+  },
+  {
+    "prompt": "What are the required fields to create a brand?",
+    "answer": "name, site, category and type.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/api-reference/brands.md#Brand Endpoints > Create Brand > POST /"
+  },
+  {
+    "prompt": "What are the allowed brand types?",
+    "answer": "lighthouse or standard.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/brand-management/README.md#Brand Management > Key Business Rules > Brand Creation Requirements"
+  },
+  {
+    "prompt": "How do you check that catalog-portfolio-api is healthy locally?",
+    "answer": "Call curl http://localhost:8080/catalog/brands/ping, which should return pong.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/troubleshooting/README.md#Troubleshooting > Quick Diagnostic > Health Check"
+  },
+  {
+    "prompt": "Which static analysis tools are run for catalog-portfolio-api code quality?",
+    "answer": "PMD, Checkstyle and SpotBugs.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/setup/local-development.md#Local Development Setup > Development Workflow > Code Quality Checks"
+  },
+  {
+    "prompt": "Where can you get help for catalog-portfolio-api issues?",
+    "answer": "By email at instore_devs@retailflow.com, on Slack #instore-dev, or through the DataDog dashboard.",
+    "answerable": true,
+    "source": "catalog-portfolio-api/latest/guide/troubleshooting/README.md#Troubleshooting > Getting Help > Support Channels"
+  },
+  {
+    "prompt": "What does the marketplace forecasting project forecast?",
+    "answer": "The demand of products in the marketplace, giving TGMV and TSI for 9 product categories plus the total for each site.",
+    "answerable": true,
+    "source": "demand-forecast-docs/latest/guide/overview.md#Overview"
+  },
+  {
+    "prompt": "Which tool manages the Python dependencies of the marketplace forecasting project?",
+    "answer": "Poetry, using pyproject.toml and poetry.lock.",
+    "answerable": true,
+    "source": "demand-forecast-docs/latest/guide/overview.md#Getting to know our tooling > Poetry"
+  },
+  {
+    "prompt": "Which three environments does the forecasting project use?",
+    "answer": "Development (DEV), Staging (HML) and Production (PRD), separated with task-image tags dev, hml and prd.",
+    "answerable": true,
+    "source": "demand-forecast-docs/latest/guide/overview.md#Getting to know our tooling > Retail Data Framework > Development environments"
+  },
+  {
+    "prompt": "Where are Retail Data Framework tasks and workflows defined?",
+    "answer": "Tasks in tasks.yml and workflows in workflows.yml.",
+    "answerable": true,
+    "source": "demand-forecast-docs/latest/guide/overview.md#Getting to know our tooling > Retail Data Framework > Retail Data Application (RDA)"
+  },
+  {
+    "prompt": "What command creates a task-image from tasks.yml?",
+    "answer": "rda prepare <task> --version X.Y.Z (optionally with a -dev, -hml or -prd tag).",
+    "answerable": true,
+    "source": "demand-forecast-docs/latest/guide/overview.md#Getting to know our tooling > Retail Data Framework > Creating tasks"
+  },
+  {
+    "prompt": "What are the four modules of the forecasting data pipeline?",
+    "answer": "Ingest, Preprocess, Forecast and Postprocess.",
+    "answerable": true,
+    "source": "demand-forecast-docs/latest/guide/overview.md#Getting to know our tooling > The data pipelines"
+  },
+  {
+    "prompt": "What forecasting pipeline class is used in the marketplace project?",
+    "answer": "ProphetVerticalIniciativaPipeline.",
+    "answerable": true,
+    "source": "demand-forecast-docs/latest/guide/overview.md#Getting to know our tooling > The data pipelines > Using the pipelines from notebook"
+  },
+  {
+    "prompt": "What reconciliation strategy is used to disaggregate monthly exogenous variables to daily values?",
+    "answer": "Forecast proportions: daily base forecasts are rescaled so that the month total matches the given monthly value.",
+    "answerable": true,
+    "source": "demand-forecast-docs/latest/guide/explicabilidad/diarizacion.md#Diarización > Approach > Forecast proportions for temporal hierarchies"
+  },
+  {
+    "prompt": "What branching model does the forecasting project use?",
+    "answer": "Gitflow, with master, develop, release, hotfix and feature branches.",
+    "answerable": true,
+    "source": "demand-forecast-docs/latest/guide/overview.md#Getting to know our tooling > Git"
+  },
+  {
+    "prompt": "What are agendas in Retail Data Application?",
+    "answer": "Regular executions of workflows or task-images defined by a cron expression.",
+    "answerable": true,
+    "source": "demand-forecast-docs/latest/guide/overview.md#Getting to know our tooling > Retail Data Framework > Retail Data Application (RDA)"
+  },
+  {
+    "prompt": "Which endpoint creates an inbound order in the fresh products API?",
+    "answer": "POST /fresh-products/inboundorder.",
+    "answerable": true,
+    "source": "zenith-keeper/1.1.6/guide/use-cases.md#"
+  },
+  {
+    "prompt": "Which exception is returned when an inbound order already exists?",
+    "answer": "OrderAlreadyExistsException, returned as HTTP 404.",
+    "answerable": true,
+    "source": "zenith-keeper/1.1.6/guide/use-cases.md#"
+  },
+  {
+    "prompt": "Which service handles GET /fresh-products in zenith-keeper?",
+    "answer": "PurchaseOrderService, using ProductRepository.",
+    "answerable": true,
+    "source": "zenith-keeper/1.1.6/guide/use-cases.md#"
+  },
+  {
+    "prompt": "Which endpoint lists batches whose due date is within a number of days?",
+    "answer": "GET /due-date/{quantityOfDays}.",
+    "answerable": true,
+    "source": "zenith-keeper/1.1.6/guide/use-cases.md#"
+  },
+  {
+    "prompt": "Which embedded web server is 2p-revenue-optimizer-api configured with?",
+    "answer": "Jetty.",
+    "answerable": true,
+    "source": "2p-revenue-optimizer-api/latest/guide/README.md#Spring Boot App model for Java 17 > Usage > Web Server"
+  },
+  {
+    "prompt": "How is the SCOPE_SUFFIX derived in 2p-revenue-optimizer-api?",
+    "answer": "From the last '-' of the scope name; for scope items-loader-test the suffix is test.",
+    "answerable": true,
+    "source": "2p-revenue-optimizer-api/latest/guide/README.md#Spring Boot App model for Java 17 > Usage > SCOPE"
+  },
+  {
+    "prompt": "Which class handles exceptions in 2p-revenue-optimizer-api?",
+    "answer": "ControllerExceptionHandler.",
+    "answerable": true,
+    "source": "2p-revenue-optimizer-api/latest/guide/README.md#Spring Boot App model for Java 17 > Usage > Error Handling"
+  },
+  {
+    "prompt": "What columns does the rule_row table have?",
+    "answer": "id, rule_id, site_id, seller_id, domain, brand and item.",
+    "answerable": true,
+    "source": "2p-revenue-optimizer-api/latest/guide/pages/table_data_dictionary/rule_row.md#rule_row Table"
+  },
+  {
+    "prompt": "Which table does rule_custom_field reference?",
+    "answer": "rule_row, through rule_row_id.",
+    "answerable": true,
+    "source": "2p-revenue-optimizer-api/latest/guide/pages/table_data_dictionary/rule_custom_field.md#rulecustomfield Table"
+  },
+  {
+    "prompt": "Which base Docker image does the 2p-revenue-optimizer-api Dockerfile use?",
+    "answer": "hub.vendorflow-cloud.io/vendorflow/java:17-mini.",
+    "answerable": true,
+    "source": "2p-revenue-optimizer-api/latest/guide/README.md#Spring Boot App model for Java 17 > Release Process > Usage"
+  },
+  {
+    "prompt": "What is the maximum size of a configuration JSON in unified-transaction-configs?",
+    "answer": "50kb, a limitation of KVS.",
+    "answerable": true,
+    "source": "unified-transaction-configs/v0.0.2/guide/howto.md#Consideraciones"
+  },
+  {
+    "prompt": "What file name must a user group file have in unified-transaction-configs?",
+    "answer": "users.json.",
+    "answerable": true,
+    "source": "unified-transaction-configs/v0.0.2/guide/howto.md#Carga de grupo de usuarios"
+  },
+  {
+    "prompt": "How are configurations loaded in unified-transaction-configs?",
+    "answer": "Through a pull request to the repository following the directory structure, with the configuration in a config.json file.",
+    "answerable": true,
+    "source": "unified-transaction-configs/v0.0.2/guide/howto.md#Carga de configuracion"
+  },
+  {
+    "prompt": "Which language is price-engine-api written in?",
+    "answer": "Go.",
+    "answerable": true,
+    "source": "price-engine-api/latest/guide/general.md#General"
+  },
+  {
+    "prompt": "Who is the tech leader of the Commerce Operations & Support team for price-engine-api?",
+    "answer": "Carlos Moreno.",
+    "answerable": true,
+    "source": "price-engine-api/latest/guide/contacto.md#Contacto > Equipo > Commerce Operations & Support"
+  },
+  {
+    "prompt": "Which Kafka topic does price-engine-api publish price changes to?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "What is the on-call rotation schedule for the traffic-gate-api team?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "What Redis cache configuration does catalog-portfolio-api use?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "How many replicas does payment-promise-gateway run in production?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "What is the monthly cloud cost of order-workflow-api?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "Which GraphQL schema does vendor-stockkeeper-api expose?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "What machine learning model replaced Prophet in the forecasting project in 2025?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "What is the password of the inventprd production database?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "How do you deploy zenith-keeper to Google Cloud Run?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "Which OAuth2 scopes are required by unified-transaction-configs?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "What is the p99 latency of the Vegeta API?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "Who approved the last release of 2p-revenue-optimizer-api?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "What is the capital of Australia?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "Who won the 2022 FIFA World Cup?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "How do I bake sourdough bread?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "What is the boiling point of water at the top of Mount Everest?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "Explain the plot of the movie Inception.",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "What is the current price of Bitcoin?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "Which frontend framework does the price-engine-api admin panel use?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  },
+  {
+    "prompt": "What is the retention policy for logs in demand-forecast-docs?",
+    "answer": "I don't have information about that topic",
+    "answerable": false,
+    "source": null
+  }
+]

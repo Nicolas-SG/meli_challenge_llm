@@ -1,0 +1,14 @@
+pandas>=2.0
+pyarrow>=14.0
+datasketch>=1.6
+sentence-transformers>=5.0
+transformers>=4.56
+peft>=0.13
+scikit-learn>=1.4
+matplotlib>=3.8
+langchain-chroma>=0.2
+langchain-huggingface>=0.1
+pytest>=8.0
+jupyter>=1.0
+# Installs the local rag_etl package (src/) so the notebooks can import it.
+-e .

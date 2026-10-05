@@ -1,0 +1,19 @@
+# Raw inputs (not redistributed): point DOCS_RAW_DIR in main.ipynb at your copy
+docs_raw/
+docs_raw*.zip
+candidate-take-home-etl*.pdf
+
+tests/
+
+# Generated data: everything is rebuilt by main.ipynb, except what Claude wrote
+data/*
+!data/ontology.json
+!data/ontology_source/
+!data/synthetic_question.json
+
+# Environment / caches
+.venv/
+__pycache__/
+*.egg-info/
+.ipynb_checkpoints/
+.pytest_cache/
